@@ -16,6 +16,9 @@ import TableHead from '@material-ui/core/TableHead';
 import { withStyles } from '@material-ui/core/styles';
 import greenDot from './img/greenDot.png';
 import redDot from './img/redDot.jpg';
+import * as style from './main.material.style';
+import NoSsr from '@material-ui/core/NoSsr';
+
 import './main.css';
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -38,7 +41,6 @@ const useStyles1 = makeStyles(theme => ({
 
 
 function Main(props) {
-
   const classes = useStyles1();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
@@ -132,6 +134,8 @@ export default function CustomPaginationActionsTable() {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  
+
   function handleChangePage(event, newPage) {
     setPage(newPage);
   }
@@ -142,6 +146,24 @@ export default function CustomPaginationActionsTable() {
   }
 
   return (
+    <div className='main'>
+      <div className='upperRow'>
+      <NoSsr>
+      <style.CustomTextField
+        id="outlined-email-input"
+        label="חיפוש"
+        type="search"
+        name="email"
+        margin="dense"
+        variant="outlined"
+      />
+      </NoSsr>
+        <style.CustomFab  variant="extended">
+          הוספת מפעיל
+        </style.CustomFab>
+        <span className='topRightHead'>ניהול מפעילים</span>
+      </div>
+
     <Paper className={classes.root}>
       <div className={classes.tableWrapper}>
         <Table className={classes.table}>
@@ -161,10 +183,10 @@ export default function CustomPaginationActionsTable() {
 
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+              
               <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.date1}
-                </TableCell>
+
+                <TableCell align="right" scope="row">{row.date1}</TableCell>
                 <TableCell align="right">{row.date2}</TableCell>
                 <TableCell align="right">{row.date3}</TableCell>
                 <TableCell align="right">{row.name}</TableCell>
@@ -172,12 +194,8 @@ export default function CustomPaginationActionsTable() {
                 <TableCell align="right">{row.wrong}{row.wrong === 'פעיל' ? <img className='dot1' src={greenDot} alt='#'/>: (row.wrong === 'תקלה'? <img className='dot' src={redDot} alt='#'/>: null)}</TableCell>
                 <TableCell align="right">{row.id}</TableCell>
                 <TableCell align="right">{row.operator}</TableCell>
-                <TableCell align="right"></TableCell>
-
-
-
-
-
+                <TableCell align="right" padding={'none'} ></TableCell>
+                
               </TableRow>
             ))}
 
@@ -208,5 +226,7 @@ export default function CustomPaginationActionsTable() {
         </Table>
       </div>
     </Paper>
+  </div>
+
   );
 }
